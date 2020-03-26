@@ -7,7 +7,7 @@
   
   <script>
   const X0=128, Y0=X0, R=X0, FPS=30, GPS=2;
-  const Ru=2, Tk=10*FPS, Ph=0.20, Pa=0.14;
+  const Ru=2, Tk=10*FPS, Ph=0.20, Pk=0.86;
   const S_KENKO=0, S_KEIDO=1, S_JUUDO=2, S_KOTAI=3;
   const S_COLORS = ["#2222dd", "#dd66ff", "#ff2222", "#22ff22"];
   let ctx, grh;
@@ -64,12 +64,12 @@
 
       if(this.s == S_KEIDO){
         if(--this.t < 0){
-            this.setStatus( (Math.random()<Ph) ? S_JUUDO : (Math.random()<Pa) ? S_KENKO : S_KOTAI );
+            this.setStatus( (Math.random()<Ph) ? S_JUUDO : (Math.random()<Pk) ? S_KOTAI : S_KENKO );
         }
       }else
       if(this.s == S_JUUDO){
         if(--this.t < 0){
-            this.setStatus( (Math.random()<Pa) ? S_KENKO : S_KOTAI );
+            this.setStatus( (Math.random()<Pk) ? S_KOTAI : S_KENKO );
         }
       }
     };
