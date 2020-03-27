@@ -7,8 +7,8 @@
   
   <script>
   const X0=128, Y0=X0, R=X0, FPS=30, GPS=2;
-  const S_KENKO=0, S_KEIDO=1, S_JUUDO=2, S_KOTAI=3;
-  const S_COLORS = ["#2222dd", "#dd66ff", "#ff2222", "#22ff22"];
+  const S_KENKO=0, S_KEIDO=1, S_JUUDO=2, S_KOTAI=3, S_DEATH=4;
+  const S_COLORS = ["#6666ff", "#dd66ff", "#ff2222", "#22ff22", "#000000"];
   let ctx, grh;
   let people;
   let gx;
@@ -17,9 +17,13 @@
   const Tk=10*FPS;  // 患う時間
   const Ph=0.20;    // 重度に至る率
   const Pk=0.86;    // 抗体できる率
+  const Pd0=0.10;   // 通常時 致死率
+  const Pd1=0.30;   // 崩壊時 致死率
   let   Pn;         // 人数
   let   Pm;         // 人が動く量率
   let   Ps;         // 人が止まる率
+  let   Bn;         // 病床数
+  let   Pd;         // 致死率
 
   function Person(){
     this.x = 0;
@@ -46,9 +50,15 @@
             this.vy = 0;
             this.t = Tk;
         }
-        if(this.s == S_JUUDO && s != S_JUUDO){
-            this.vx = this.vx_back;
-            this.vy = this.vy_back;
+
+        if(this.s == S_JUUDO){
+            if(s == S_DEATH){
+                // none
+            }else
+            {
+                this.vx = this.vx_back;
+                this.vy = this.vy_back;
+            }
         }
 
         this.s = s;
@@ -75,7 +85,7 @@
       }else
       if(this.s == S_JUUDO){
         if(--this.t < 0){
-            this.setStatus( (Math.random()<Pk) ? S_KOTAI : S_KENKO );
+            this.setStatus( (Math.random()<Pd) ? S_DEATH : (Math.random()<Pk) ? S_KOTAI : S_KENKO );
         }
       }
     };
@@ -86,7 +96,7 @@
 
     ctx.beginPath();
     ctx.arc(X0, Y0, R, 0, 2*Math.PI);
-    ctx.fillStyle = "#dddddd";
+    ctx.fillStyle = (Pd == Pd0) ? "#dddddd" : "#888888";
     ctx.fill();
 
     let n = people.length;
@@ -129,47 +139,63 @@
 
     grh.beginPath();
     grh.moveTo(gx,y);
-    grh.lineTo(gx,y-=c[2]*p);
-    grh.strokeStyle = S_COLORS[2];
+    grh.lineTo(gx,y-=c[S_JUUDO]*p);
+    grh.strokeStyle = S_COLORS[S_JUUDO];
     grh.stroke();
     grh.beginPath();
     grh.moveTo(gx,y);
-    grh.lineTo(gx,y-=c[1]*p);
-    grh.strokeStyle = S_COLORS[1];
+    grh.lineTo(gx,y-=c[S_DEATH]*p);
+    grh.strokeStyle = S_COLORS[S_DEATH];
     grh.stroke();
     grh.beginPath();
     grh.moveTo(gx,y);
-    grh.lineTo(gx,y-=c[3]*p);
-    grh.strokeStyle = S_COLORS[3];
+    grh.lineTo(gx,y-=c[S_KEIDO]*p);
+    grh.strokeStyle = S_COLORS[S_KEIDO];
     grh.stroke();
     grh.beginPath();
     grh.moveTo(gx,y);
-    grh.lineTo(gx,y-=c[0]*p);
-    grh.strokeStyle = S_COLORS[0];
+    grh.lineTo(gx,y-=c[S_KOTAI]*p);
+    grh.strokeStyle = S_COLORS[S_KOTAI];
+    grh.stroke();
+    grh.beginPath();
+    grh.moveTo(gx,y);
+    grh.lineTo(gx,y-=c[S_KENKO]*p);
+    grh.strokeStyle = S_COLORS[S_KENKO];
+    grh.stroke();
+
+    grh.beginPath();
+    grh.moveTo(gx, grh.canvas.height-(Bn*p)+1);
+    grh.lineTo(gx, grh.canvas.height-(Bn*p)+0);
+    grh.strokeStyle = "#888888";
     grh.stroke();
 
     ++gx;
   }
 
   function check(){
-    let c = [0,0,0,0];
+    let c = [0,0,0,0,0];
 
     let n = people.length;
     while(n--){
         ++c[people[n].s];
     }
 
+    Pd = (c[S_JUUDO]<Bn) ? Pd0 : Pd1;
+
     drawg(c);
+    document.getElementById('elmDeath').innerText = c[S_DEATH];
 
     setTimeout(check, 1000/GPS);
   }
 
-  function init(c, g, pn, pm, ps){
+  function init(c, g, pn, pm, ps, bn){
     let first = (people === undefined);
 
     Pn = pn;
     Pm = pm;
     Ps = ps;
+    Bn = bn;
+    Pd = Pd0;
 
     ctx = c;
     grh = g;
@@ -201,17 +227,21 @@
         People Speed: 
         <input id="Pm" type="text" value="1.0" style="width:5em;"><br>
         People Stopping: 
-        <input id="Ps" type="text" value="0.0" style="width:5em;">
+        <input id="Ps" type="text" value="0.0" style="width:5em;"><br>
+        Sickbed Number: 
+        <input id="Bn" type="text" value="16" style="width:5em;">
         <input type="button" value="Simulate" onclick="init(
                                                         document.getElementById('cvs').getContext('2d'),
                                                         document.getElementById('grh').getContext('2d'),
                                                         Number(document.getElementById('Pn').value),
                                                         Number(document.getElementById('Pm').value),
-                                                        Number(document.getElementById('Ps').value)
+                                                        Number(document.getElementById('Ps').value),
+                                                        Number(document.getElementById('Bn').value)
                                                         );">
     </p>
     <canvas id="cvs" width="256" height="256"></canvas><br>
     <canvas id="grh" width="256" height="128"></canvas><br>
+    Death: <span id="elmDeath">-</span>
 
     <p>
         CC-BY <a href="https://yrm006.wordpress.com/">yrm</a>
