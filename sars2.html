@@ -7,19 +7,25 @@
   
   <script>
   const X0=128, Y0=X0, R=X0, FPS=30, GPS=2;
-  const Ru=2, Tk=10*FPS, Ph=0.20, Pk=0.86;
   const S_KENKO=0, S_KEIDO=1, S_JUUDO=2, S_KOTAI=3;
   const S_COLORS = ["#2222dd", "#dd66ff", "#ff2222", "#22ff22"];
   let ctx, grh;
   let people;
   let gx;
-  let Sp;
+
+  const Ru=2;       // うつる距離
+  const Tk=10*FPS;  // 患う時間
+  const Ph=0.20;    // 重度に至る率
+  const Pk=0.86;    // 抗体できる率
+  let   Pn;         // 人数
+  let   Pm;         // 人が動く量率
+  let   Ps;         // 人が止まる率
 
   function Person(){
     this.x = 0;
     this.y = 0;
-    this.vx = (Math.random()-0.5)*2.0*Sp;
-    this.vy = (Math.random()-0.5)*2.0*Sp;
+    this.vx = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+    this.vy = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
     this.vx_back = this.vx;
     this.vy_back = this.vy;
     this.s = S_KENKO;
@@ -158,15 +164,19 @@
     setTimeout(check, 1000/GPS);
   }
 
-  function init(c, g, sp, n){
+  function init(c, g, pn, pm, ps){
     let first = (people === undefined);
 
-    Sp = sp;
+    Pn = pn;
+    Pm = pm;
+    Ps = ps;
 
     ctx = c;
     grh = g;
 
-    people = new Array(n);
+    people = new Array(Pn);
+
+    let n = people.length;
     while(n--){
         people[n] = new Person();
     }
@@ -186,15 +196,26 @@
 
 <body onload="">
     <p>
-        People Moving: 
-        <input id="Sp" type="text" value="1.0" style="width:5em;">
-        <input type="button" value="Simulate" onclick="init(document.getElementById('cvs').getContext('2d'), 
-                                                        document.getElementById('grh').getContext('2d'), 
-                                                        Number(document.getElementById('Sp').value), 
-                                                        512);">
+        People Number: 
+        <input id="Pn" type="text" value="512" style="width:5em;"><br>
+        People Speed: 
+        <input id="Pm" type="text" value="1.0" style="width:5em;"><br>
+        People Stopping: 
+        <input id="Ps" type="text" value="0.0" style="width:5em;">
+        <input type="button" value="Simulate" onclick="init(
+                                                        document.getElementById('cvs').getContext('2d'),
+                                                        document.getElementById('grh').getContext('2d'),
+                                                        Number(document.getElementById('Pn').value),
+                                                        Number(document.getElementById('Pm').value),
+                                                        Number(document.getElementById('Ps').value)
+                                                        );">
     </p>
     <canvas id="cvs" width="256" height="256"></canvas><br>
     <canvas id="grh" width="256" height="128"></canvas><br>
+
+    <p>
+        CC-BY <a href="https://yrm006.wordpress.com/">yrm</a>
+    </p>
 </body>
 
 </html>
