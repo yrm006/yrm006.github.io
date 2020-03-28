@@ -23,7 +23,7 @@
   let   Pm;         // 人が動く量率
   let   Ps;         // 人が止まる率
   let   Bn;         // 病床数
-  let   Pd;         // 致死率
+  let   Pd;         // 現状 致死率
 
   function Person(){
     this.x = 0;
@@ -124,6 +124,8 @@
         if(dx*dx+dy*dy < Ru*Ru){
             if(people[n].s==S_KEIDO && people[m].s==S_KENKO) people[m].setStatus( S_KEIDO );
             if(people[m].s==S_KEIDO && people[n].s==S_KENKO) people[n].setStatus( S_KEIDO );
+            if(people[n].s==S_JUUDO && people[m].s==S_KENKO && Pd==Pd1) people[m].setStatus( S_KEIDO );
+            if(people[m].s==S_JUUDO && people[n].s==S_KENKO && Pd==Pd1) people[n].setStatus( S_KEIDO );
         }
       }
     }
@@ -240,6 +242,13 @@
                                                         );">
     </p>
     <canvas id="cvs" width="256" height="256"></canvas><br>
+    <p>
+        <span style="background-color:#6666ff;"> good </span>&nbsp;
+        <span style="background-color:#dd66ff;"> mild </span>&nbsp;
+        <span style="background-color:#ff2222;"> heavy </span>&nbsp;
+        <span style="background-color:#22ff22;"> antibody </span>&nbsp;
+        <span style="background-color:#000000;color:#ffffff;"> death </span>&nbsp;
+    </p>
     <canvas id="grh" width="256" height="128"></canvas><br>
     Death: <span id="elmDeath">-</span>
 
