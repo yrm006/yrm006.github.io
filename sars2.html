@@ -185,7 +185,13 @@
     Pd = (c[S_JUUDO]<Bn) ? Pd0 : Pd1;
 
     drawg(c);
+    document.getElementById('elmGood').innerText = c[S_KENKO];
+    document.getElementById('elmMild').innerText = c[S_KEIDO];
+    document.getElementById('elmHeavy').innerText = c[S_JUUDO];
+    document.getElementById('elmAnti').innerText = c[S_KOTAI];
     document.getElementById('elmDeath').innerText = c[S_DEATH];
+
+    document.getElementById('elmNMS').style.display = (Pd == Pd1) ? "inline" : "none";
 
     setTimeout(check, 1000/GPS);
   }
@@ -226,10 +232,10 @@
     <p>
         People Number: 
         <input id="Pn" type="text" value="512" style="width:5em;"><br>
-        People Speed: 
-        <input id="Pm" type="text" value="1.0" style="width:5em;"><br>
-        People Stopping: 
-        <input id="Ps" type="text" value="0.0" style="width:5em;"><br>
+        People Activity: 
+        <input id="Pm" type="text" value="1.0" style="width:5em;">(0.0〜)<br>
+        Staying Home: 
+        <input id="Ps" type="text" value="0.0" style="width:5em;">(0.0〜1.0)<br>
         Sickbed Number: 
         <input id="Bn" type="text" value="16" style="width:5em;">
         <input type="button" value="Simulate" onclick="init(
@@ -242,17 +248,22 @@
                                                         );">
     </p>
     <canvas id="cvs" width="256" height="256"></canvas><br>
-    <p>
-        <span style="background-color:#6666ff;"> good </span>&nbsp;
-        <span style="background-color:#dd66ff;"> mild </span>&nbsp;
-        <span style="background-color:#ff2222;"> heavy </span>&nbsp;
-        <span style="background-color:#22ff22;"> antibody </span>&nbsp;
-        <span style="background-color:#000000;color:#ffffff;"> death </span>&nbsp;
+    <p style="font-size:55%;">
+        <span style="background-color:#000000;color:#ffffff;"> death:<span id="elmDeath">-</span> </span>&nbsp;
+        <span style="background-color:#6666ff;"> good:<span id="elmGood">-</span> </span>&nbsp;
+        <span style="background-color:#22ff22;"> antibody:<span id="elmAnti">-</span> </span>&nbsp;
+        <span style="background-color:#dd66ff;"> mild:<span id="elmMild">-</span> </span>&nbsp;
+        <span style="background-color:#ff2222;"> heavy:<span id="elmHeavy">-</span>
+          <span id="elmNMS" style="display:none;">MORE BED</span>
+        </span>
     </p>
     <canvas id="grh" width="256" height="128"></canvas><br>
-    Death: <span id="elmDeath">-</span>
 
     <p>
+        <div style="float:right;">
+            [English]
+            <a href="sars2.ja.html">[日本語]</a>
+        </div>
         CC-BY <a href="https://yrm006.wordpress.com/">yrm</a>
     </p>
 </body>
