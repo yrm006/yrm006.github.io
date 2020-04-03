@@ -74,6 +74,8 @@
         let v = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
         this.vx = Math.cos(sn) * v;
         this.vy = Math.sin(sn) * v;
+        this.vx_back = this.vx;
+        this.vy_back = this.vy;
         this.x += this.vx;
         this.y += this.vy;
       }
@@ -223,7 +225,46 @@
     if(first){
         tick();
         check();
+        document.getElementById('aPm').disabled = false;
+        document.getElementById('aPs').disabled = false;
+        document.getElementById('aBn').disabled = false;
     }
+  }
+
+  function setPm(pm){
+    Pm = pm;
+
+    let n = people.length;
+    while(n--){
+        var o = people[n];
+        if(o.vx == o.vx_back && o.vy == o.vy_back){
+            o.vx = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+            o.vy = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+        }else{
+            o.vx_back = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+            o.vy_back = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+        }
+    }
+  }
+
+  function setPs(ps){
+    Ps = ps;
+
+    let n = people.length;
+    while(n--){
+        var o = people[n];
+        if(o.vx == o.vx_back && o.vy == o.vy_back){
+            o.vx = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+            o.vy = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+        }else{
+            o.vx_back = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+            o.vy_back = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+        }
+    }
+  }
+
+  function setBn(bn){
+      Bn = bn;
   }
   </script>
 </head>
@@ -232,13 +273,16 @@
     <h4>SARS-CoV-2 spread SIMPLE simulator</h4>
     <p>
         People Number: 
-        <input id="Pn" type="text" value="512" style="width:5em;"><br>
+        <input id="Pn" type="text" value="512" style="width:3em;"><br>
         People Activity: 
-        <input id="Pm" type="text" value="1.0" style="width:5em;">(0.0〜)<br>
+        <input id="Pm" type="text" value="1.0" style="width:2em;"><span style="font-size:50%;">(0.0〜)</span>
+            <input id="aPm" type="button" value="Apply" onclick="setPm(Number(document.getElementById('Pm').value));" disabled><br>
         Staying Home: 
-        <input id="Ps" type="text" value="0.0" style="width:5em;">(0.0〜1.0)<br>
+        <input id="Ps" type="text" value="0.0" style="width:2em;"><span style="font-size:50%;">(0.0〜1.0)</span>
+            <input id="aPs" type="button" value="Apply" onclick="setPs(Number(document.getElementById('Ps').value));" disabled><br>
         Sickbed Number: 
-        <input id="Bn" type="text" value="16" style="width:5em;">
+        <input id="Bn" type="text" value="16" style="width:3em;">
+            <input id="aBn" type="button" value="Apply" onclick="setBn(Number(document.getElementById('Bn').value));" disabled><br>
         <input type="button" value="Simulate" onclick="init(
                                                         document.getElementById('cvs').getContext('2d'),
                                                         document.getElementById('grh').getContext('2d'),
@@ -261,11 +305,7 @@
     <canvas id="grh" width="256" height="128"></canvas><br>
 
     <p>
-        <p style="font-size:60%;">
-            <a href="http://tk3-805-12365.vw.sakura.ne.jp:3000">Health check "How are you?"</a>
-            <img src="http://tk3-805-12365.vw.sakura.ne.jp:3000/images/fine.png" style="height:16px;">
-        </p>
-        <div style="float:right;">
+        <div>
             [English]
             <a href="sars2.ja.html">[日本語]</a>
         </div>
