@@ -47,6 +47,7 @@
             }
             tr.id = c.項目名;
         }
+        main.removeChild(main.lastChild);
         main.appendChild(tbl);
     }
     </script>
@@ -55,8 +56,9 @@
 <body>
     <div id="box">
         <h2>CSVフォームメーカー</h2>
-        <input id="csv"> <button onclick="onGet(csv.value);">GET</button>
-        <div id="main"></div>
+        <div id="main">
+            <input id="csv"> <button onclick="onGet(csv.value);">GET</button>
+        </div>
     </div>
     <br>
     <button disable>送信する</a>
