@@ -19,7 +19,7 @@
 
     const user = "[[your_name]]";
 
-    export const onGet = async (csvurl) => {
+    window.onGet = async (csvurl) => {
         const scsv = await (await fetch(csvurl)).text();
         const json = CSV.toJSON(CSV.decode(scsv));
         console.log(json);
