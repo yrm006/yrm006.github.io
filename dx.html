@@ -19,7 +19,7 @@
 
     const user = "[[your_name]]";
 
-    window.onGet = async (csvurl) => {
+    window.onGetCSV = async (csvurl) => {
         const scsv = await (await fetch(csvurl)).text();
         const json = CSV.toJSON(CSV.decode(scsv));
         console.log(json);
@@ -57,8 +57,8 @@
     <div id="box">
         <h2>CSVフォームメーカー</h2>
         <div id="main">
-            <input id="csv"> <button onclick="onGet(csv.value);">GET</button>
-            <div style="font-size:75%;">ex. https://raw.githubusercontent.com/code4sabae/dxgov/main/public/csv/register_terminal.csv</div>
+            CSV URL:<input id="csv"> <button onclick="onGetCSV(csv.value);">GET CSV</button>
+            <div style="font-size:60%;">ex. https://raw.githubusercontent.com/code4sabae/dxgov/main/public/csv/register_terminal.csv</div>
         </div>
     </div>
     <br>
