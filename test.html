@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script language="text/javascript">
+    function onSuccess(pos){
+      alert(pos.coords.latitude + ", " + pos.coords.longitude);
+    }
+
+    function onError(){
+      alert("error");
+    }
+
+    function test(){
+      navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
+  </script>
+</head>
+
+<body>
+  <button onclick="test();"> TEST </button>
+</body>
+
+</html>
