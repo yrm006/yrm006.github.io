@@ -27,7 +27,7 @@
         const tbl = cr("table");
         for (const c of json) {
             if(c.項目名 === "申請書名"){
-                title.textContent = c.項目名;
+                title.textContent = c.規定項目値;
             }else{
                 const tr = cr("tr");
                 tbl.appendChild(tr);
