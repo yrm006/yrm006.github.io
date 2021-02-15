@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>演劇型 ももたろう</title>
+
+	<script>
+	// 役づくり
+	function ももたろう役(){
+											alert(this.constructor.name + ' があった');
+		this.もちもの = null;
+		this.える = function(もの){
+			this.もちもの = もの;
+											alert(this.constructor.name + ' は ' + もの.constructor.name + ' をゲット');
+		};
+	}
+	function もも役(){
+											alert(this.constructor.name + ' があった');
+		this.なかみ = new ももたろう役();
+		this.われる = function(){
+			var r = this.なかみ;
+			this.なかみ = null;
+											alert(this.constructor.name + ' は ' + r.constructor.name + ' を出した');
+			return r;
+		};
+	}
+	function おたから役(){
+											alert(this.constructor.name + ' があった');
+	}
+	function おに役(){
+											alert(this.constructor.name + ' があった');
+		this.もちもの = new おたから役();
+		this.やられる = function(あいて){
+			if(あいて.constructor === ももたろう役){
+				var r = this.もちもの;
+				this.もちもの = null;
+											alert(this.constructor.name + ' は ' + r.constructor.name + ' を出した');
+				return r;
+			}else{
+				return null;
+			}
+		};
+	}
+
+	// おはなし
+	var もも = new もも役();
+	var ももたろう = もも.われる();
+	var おに = new おに役();
+	var おたから = おに.やられる(ももたろう);
+	ももたろう.える(おたから);
+	</script>
+</head>
+
+</html>

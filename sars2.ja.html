@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>SARSnCov2</title>
+  
+  <script>
+  const X0=128, Y0=X0, R=X0, FPS=30, GPS=2;
+  const S_KENKO=0, S_KEIDO=1, S_JUUDO=2, S_KOTAI=3, S_DEATH=4;
+  const S_COLORS = ["#6666ff", "#dd66ff", "#ff2222", "#22ff22", "#000000"];
+  let ctx, grh;
+  let people;
+  let gx;
+
+  const Ru=2;       // うつる距離
+  const Tk=10*FPS;  // 患う時間
+  const Ph=0.20;    // 重度に至る率
+  const Pk=0.86;    // 抗体できる率
+  const Pd0=0.10;   // 通常時 致死率
+  const Pd1=0.30;   // 崩壊時 致死率
+  let   Pn;         // 人数
+  let   Pm;         // 人が動く量率
+  let   Ps;         // 人が止まる率
+  let   Bn;         // 病床数
+  let   Pd;         // 現状 致死率
+
+  function Person(){
+    this.x = 0;
+    this.y = 0;
+    this.vx = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+    this.vy = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+    this.vx_back = this.vx;
+    this.vy_back = this.vy;
+    this.s = S_KENKO;
+    this.t = 0;
+
+    while(R*R <= (this.x-X0)*(this.x-X0)+(this.y-Y0)*(this.y-Y0)){
+      this.x = Math.random()*(R*2);
+      this.y = Math.random()*(R*2);
+    }
+
+    this.setStatus = function(s){
+        if(s == S_KEIDO){
+            this.t = Tk * Math.random();
+        }
+
+        if(s == S_JUUDO){
+            this.vx = 0;
+            this.vy = 0;
+            this.t = Tk;
+        }
+
+        if(this.s == S_JUUDO){
+            if(s == S_DEATH){
+                // none
+            }else
+            {
+                this.vx = this.vx_back;
+                this.vy = this.vy_back;
+            }
+        }
+
+        this.s = s;
+    };
+
+    this.tick = function(){
+      this.x += this.vx;
+      this.y += this.vy;
+      if(R*R <= (this.x-X0)*(this.x-X0)+(this.y-Y0)*(this.y-Y0)){
+        let s0 = Math.atan2(this.y-Y0, this.x-X0);
+        let s = Math.atan2(this.vy, this.vx);
+        let sn = s0 + Math.PI + (s0 - s);
+        let v = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+        this.vx = Math.cos(sn) * v;
+        this.vy = Math.sin(sn) * v;
+        this.vx_back = this.vx;
+        this.vy_back = this.vy;
+        this.x += this.vx;
+        this.y += this.vy;
+      }
+
+      if(this.s == S_KEIDO){
+        if(--this.t < 0){
+            this.setStatus( (Math.random()<Ph) ? S_JUUDO : (Math.random()<Pk) ? S_KOTAI : S_KENKO );
+        }
+      }else
+      if(this.s == S_JUUDO){
+        if(--this.t < 0){
+            this.setStatus( (Math.random()<Pd) ? S_DEATH : (Math.random()<Pk) ? S_KOTAI : S_KENKO );
+        }
+      }
+    };
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    ctx.beginPath();
+    ctx.arc(X0, Y0, R, 0, 2*Math.PI);
+    ctx.fillStyle = (Pd == Pd0) ? "#dddddd" : "#888888";
+    ctx.fill();
+
+    let n = people.length;
+    while(n--){
+      let o = people[n];
+      ctx.beginPath();
+      ctx.arc(o.x, o.y, 2, 0, 2*Math.PI);
+      ctx.fillStyle = S_COLORS[o.s];
+      ctx.fill();
+    }
+  }
+
+  function tick(){
+    let n = people.length;
+    while(n--){
+        people[n].tick();
+    }
+
+    n = people.length;
+    while(n--){
+      let m = n;
+      while(m--){
+        let dx = people[n].x - people[m].x;
+        let dy = people[n].y - people[m].y;
+        if(dx*dx+dy*dy < Ru*Ru){
+            if(people[n].s==S_KEIDO && people[m].s==S_KENKO) people[m].setStatus( S_KEIDO );
+            if(people[m].s==S_KEIDO && people[n].s==S_KENKO) people[n].setStatus( S_KEIDO );
+            if(people[n].s==S_JUUDO && people[m].s==S_KENKO && Pd==Pd1) people[m].setStatus( S_KEIDO );
+            if(people[m].s==S_JUUDO && people[n].s==S_KENKO && Pd==Pd1) people[n].setStatus( S_KEIDO );
+        }
+      }
+    }
+
+    draw();
+
+    setTimeout(tick, 1000/FPS);
+  }
+
+  function drawg(c){
+    let y = grh.canvas.height;
+    let p = y / people.length;
+
+    grh.beginPath();
+    grh.moveTo(gx,y);
+    grh.lineTo(gx,y-=c[S_JUUDO]*p);
+    grh.strokeStyle = S_COLORS[S_JUUDO];
+    grh.stroke();
+    grh.beginPath();
+    grh.moveTo(gx,y);
+    grh.lineTo(gx,y-=c[S_DEATH]*p);
+    grh.strokeStyle = S_COLORS[S_DEATH];
+    grh.stroke();
+    grh.beginPath();
+    grh.moveTo(gx,y);
+    grh.lineTo(gx,y-=c[S_KEIDO]*p);
+    grh.strokeStyle = S_COLORS[S_KEIDO];
+    grh.stroke();
+    grh.beginPath();
+    grh.moveTo(gx,y);
+    grh.lineTo(gx,y-=c[S_KOTAI]*p);
+    grh.strokeStyle = S_COLORS[S_KOTAI];
+    grh.stroke();
+    grh.beginPath();
+    grh.moveTo(gx,y);
+    grh.lineTo(gx,y-=c[S_KENKO]*p);
+    grh.strokeStyle = S_COLORS[S_KENKO];
+    grh.stroke();
+
+    grh.beginPath();
+    grh.moveTo(gx, grh.canvas.height-(Bn*p)+1);
+    grh.lineTo(gx, grh.canvas.height-(Bn*p)+0);
+    grh.strokeStyle = "#888888";
+    grh.stroke();
+
+    ++gx;
+  }
+
+  function check(){
+    let c = [0,0,0,0,0];
+
+    let n = people.length;
+    while(n--){
+        ++c[people[n].s];
+    }
+
+    Pd = (c[S_JUUDO]<Bn) ? Pd0 : Pd1;
+
+    drawg(c);
+    document.getElementById('elmGood').innerText = c[S_KENKO];
+    document.getElementById('elmMild').innerText = c[S_KEIDO];
+    document.getElementById('elmHeavy').innerText = c[S_JUUDO];
+    document.getElementById('elmAnti').innerText = c[S_KOTAI];
+    document.getElementById('elmDeath').innerText = c[S_DEATH];
+
+    document.getElementById('elmNMS').style.display = (Pd == Pd1) ? "inline" : "none";
+
+    setTimeout(check, 1000/GPS);
+  }
+
+  function init(c, g, pn, pm, ps, bn){
+    let first = (people === undefined);
+
+    Pn = pn;
+    Pm = pm;
+    Ps = ps;
+    Bn = bn;
+    Pd = Pd0;
+
+    ctx = c;
+    grh = g;
+
+    people = new Array(Pn);
+
+    let n = people.length;
+    while(n--){
+        people[n] = new Person();
+    }
+
+    people[0].setStatus( S_KEIDO );
+
+    gx = 0;
+    grh.clearRect(0, 0, grh.canvas.width, grh.canvas.height);
+
+    if(first){
+        tick();
+        check();
+        document.getElementById('aPm').disabled = false;
+        document.getElementById('aPs').disabled = false;
+        document.getElementById('aBn').disabled = false;
+    }
+  }
+
+  function setPm(pm){
+    Pm = pm;
+
+    let n = people.length;
+    while(n--){
+        var o = people[n];
+        if(o.vx == o.vx_back && o.vy == o.vy_back){
+            o.vx = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+            o.vy = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+        }else{
+            o.vx_back = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+            o.vy_back = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+        }
+    }
+  }
+
+  function setPs(ps){
+    Ps = ps;
+
+    let n = people.length;
+    while(n--){
+        var o = people[n];
+        if(o.vx == o.vx_back && o.vy == o.vy_back){
+            o.vx = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+            o.vy = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+        }else{
+            o.vx_back = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+            o.vy_back = (Math.random()<Ps) ? 0 : (Math.random()*2-1)*Pm;
+        }
+    }
+  }
+
+  function setBn(bn){
+      Bn = bn;
+  }
+  </script>
+</head>
+
+<body onload="">
+    <h4>SARS-CoV-2 拡散 *簡易*シミュレータ</h4>
+    <p>
+        人の数: 
+        <input id="Pn" type="text" value="512" style="width:5em;"><br>
+        活動量: 
+        <input id="Pm" type="text" value="1.0" style="width:5em;"><span style="font-size:50%;">(0.0〜)</span>
+            <input id="aPm" type="button" value="Apply" onclick="setPm(Number(document.getElementById('Pm').value));" disabled><br>
+        在宅率: 
+        <input id="Ps" type="text" value="0.0" style="width:5em;"><span style="font-size:50%;">(0.0〜1.0)</span>
+            <input id="aPs" type="button" value="Apply" onclick="setPs(Number(document.getElementById('Ps').value));" disabled><br>
+        病床数: 
+        <input id="Bn" type="text" value="16" style="width:5em;">
+            <input id="aBn" type="button" value="Apply" onclick="setBn(Number(document.getElementById('Bn').value));" disabled><br>
+        <input type="button" value="シミュレート" onclick="init(
+                                                        document.getElementById('cvs').getContext('2d'),
+                                                        document.getElementById('grh').getContext('2d'),
+                                                        Number(document.getElementById('Pn').value),
+                                                        Number(document.getElementById('Pm').value),
+                                                        Number(document.getElementById('Ps').value),
+                                                        Number(document.getElementById('Bn').value)
+                                                        );">
+    </p>
+    <canvas id="cvs" width="256" height="256"></canvas><br>
+    <p style="font-size:55%;">
+        <span style="background-color:#000000;color:#ffffff;"> 死:<span id="elmDeath">-</span> </span>&nbsp;
+        <span style="background-color:#6666ff;color:#ffffff;"> 健体:<span id="elmGood">-</span> </span>&nbsp;
+        <span style="background-color:#22ff22;"> 抗体:<span id="elmAnti">-</span> </span>&nbsp;
+        <span style="background-color:#dd66ff;"> 軽度:<span id="elmMild">-</span> </span>&nbsp;
+        <span style="background-color:#ff2222;"> 重度:<span id="elmHeavy">-</span>
+          <span id="elmNMS" style="display:none;">病床不足</span>
+        </span>
+    </p>
+    <canvas id="grh" width="256" height="128"></canvas><br>
+
+    <p>
+        <div>
+            <a href="sars2.html">[English]</a>
+            [日本語]
+        </div>
+        CC-BY <a href="https://yrm006.wordpress.com/">yrm</a>
+    </p>
+</body>
+
+</html>

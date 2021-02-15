@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Pi</title>
+  
+  <script>
+  function montecarlo(ctx, n){
+	var x=128, y=128, r=128;{
+		ctx.beginPath();
+		ctx.arc(x, y, r, 0, 2*Math.PI);
+		ctx.fillStyle = "#dddddd";
+		ctx.fill();
+	}
+
+	var m=0;
+	var i=n;
+	while(i--){
+		var xm = Math.random()*256;
+		var ym = Math.random()*256;
+
+		var jg = ((xm-128)*(xm-128)+(ym-128)*(ym-128) < r*r);
+
+		ctx.beginPath();
+		ctx.arc(xm, ym, 1, 0, 2*Math.PI);
+		ctx.fillStyle = jg ? "#dd2222" : "#dddddd";
+		ctx.fill();
+
+		m += jg;
+	}
+
+	return 4*m/n;
+  }
+  </script>
+</head>
+
+<body onload="document.getElementById('csl').innerText = montecarlo(document.getElementById('cvs').getContext('2d'), +location.hash.substr(1));">
+  <canvas id="cvs" width="256" height="256"></canvas> <div id="csl"> - </div>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
+    <script>
+        let dr = {};
+        let ld = "-";
+
+        window.onload = function(){
+            fetch('https://www.stopcovid19.jp/data/covid19japan.json')
+                .then(res => res.json())
+                .then((data) => {
+                    ld = data.lastUpdate;
+
+                    let i=0;
+                    while(i<data.area.length){
+                        dr[data.area[i].name] = data.area[i].ndeaths/(data.area[i].nexits+data.area[i].ndeaths);
+                        ++i;
+                    }
+
+                    fetch('https://www.stopcovid19.jp/data/covid19japan-fast.json')
+                    .then(res => res.json())
+                    .then((data) => {
+                        let i=0;
+                        while(i<data.length){
+                            dr[data[i].name] = data[i].ndeaths/(data[i].nexits+data[i].ndeaths);
+                            ++i;
+                        }
+
+                        // console.log( dr );
+                        draw();
+                    }).catch(err => console.error(err));
+                }).catch(err => console.error(err));
+        }
+
+        function draw(){
+            let labels = [];
+            let data = [];
+
+            for(let name in dr){
+                labels.push( name );
+                data.push( dr[name] );
+            }
+
+            var ctx = document.getElementById("myChart");
+            var ex_chart = new Chart(ctx, {
+                type: 'horizontalBar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: ld,
+                        data: data,
+                        backgroundColor: 'rgba(255, 100, 100, 1)'
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "致死率"
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                suggestedMin: 0.0,
+                                suggestedMax: 1.0
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<body style="text-align:center;">
+    <canvas id="myChart" width="400" height="400"></canvas>
+
+    <p>
+        CC-BY yrm, Data from <a href="https://www.stopcovid19.jp">COVID-19 Japan</a>
+    </p>
+</body>
+
+</html>
