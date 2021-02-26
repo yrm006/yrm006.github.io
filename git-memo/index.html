@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="https://yrm006.github.io/2021.02.15/">
+        <link rel="canonical" href="https://yrm006.github.io/git-memo/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>回覧板アプリ「cityhall」、小学6年生と制作中！いっしょに作ろう「Keep on Gitting!」 - about yrm</title>
+        <title>git-memo - about yrm</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -26,14 +26,14 @@
     
     
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="回覧板アプリ「cityhall」、小学6年生と制作中！いっしょに作ろう「Keep on Gitting!」 - about yrm" />
+    <meta property="og:title" content="git-memo - about yrm" />
     <meta property="og:description" content="Keep on Gitting" />
-    <meta property="og:url" content="https://yrm006.github.io/2021.02.15/" />
-    <meta property="og:image" content="https://yrm006.github.io/2021.02.15/IMG_2505.jpg" />
+    <meta property="og:url" content="https://yrm006.github.io/git-memo/" />
+    <meta property="og:image" content="https://yrm006.github.io/git-memo/" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="回覧板アプリ「cityhall」、小学6年生と制作中！いっしょに作ろう「Keep on Gitting!」 - about yrm" />
+    <meta name="twitter:title" content="git-memo - about yrm" />
     <meta name="twitter:description" content="Keep on Gitting" />
-    <meta name="twitter:image" content="https://yrm006.github.io/2021.02.15/IMG_2505.jpg" />
+    <meta name="twitter:image" content="https://yrm006.github.io/git-memo/" />
 
     <link rel="icon" href="/yrm-32.jpg" sizes="32x32" />
     <link rel="icon" href="/yrm-192.jpg" sizes="192x192" />
@@ -65,8 +65,8 @@
                             <li class="navitem">
                                 <a href=".." class="nav-link">Blog</a>
                             </li>
-                            <li class="navitem">
-                                <a href="../git-memo/" class="nav-link">git-memo</a>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">git-memo</a>
                             </li>
                             <li class="navitem">
                                 <a href="../archive/" class="nav-link">Archive</a>
@@ -79,6 +79,16 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../archive/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -88,26 +98,89 @@
             <div class="row">
 <div class="col-md-9" role="main">
 
-<h1 id="cityhall6keep-on-gitting">回覧板アプリ「cityhall」、小学6年生と制作中！いっしょに作ろう「Keep on Gitting!」</h1>
-<p>うちの地域では「回覧板」が回っていますが、中を見る機会はありません。でも、何か楽しい情報が載っているのかも？</p>
-<p><img alt="" src="Screen Shot 2021-02-16 at 8.37.52 copy.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>そこで作っています、回覧板アプリ「cityhall」。このように管理画面でメッセージを入力すると、</p>
-<p><img alt="" src="Screen Shot 2021-02-16 at 8.38.26.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>市民側の画面にそのメッセージが届きます。</p>
-<p><img alt="" src="Screen Shot 2021-02-16 at 8.36.48.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>ついでに「レポート」機能も追加、市民側が身近な気になることを写真付きで送信すると、</p>
-<p><img alt="" src="Screen Shot 2021-02-16 at 8.36.57.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>管理画面に到着。市民からのレポートを受けて、管理側が市民側とチャットできる機能を追加中。</p>
-<p><img alt="" src="IMG_2505.jpg" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>もちろんスマホのアプリとしても動作、みんなの市のロゴをアイコンにしてAppストアで配布するといいね！みなさんの市でいかがですか？</p>
-<p><img alt="" src="Screen Shot 2021-02-16 at 14.34.29.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>こちら、PCN勝山に通う小学6年生 <a href="https://github.com/ken7python">ken7python</a> と一緒に<a href="https://github.com/yrm006/cityhall">github</a>上で制作中！</p>
-<p>いっしょに制作、いかがですか？ Keep on Gitting!</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p></div>
+<h1 id="git-memo">git-memo</h1>
+<h2 id="_1">用語</h2>
+<ul>
+<li><strong>work</strong><ul>
+<li>自分の作業ファイル達</li>
+</ul>
+</li>
+<li><strong>stage</strong><ul>
+<li>コミットされるファイル達が置かれる場所</li>
+</ul>
+</li>
+<li><strong>node</strong><ul>
+<li>コミットされたポイント</li>
+<li>hash値で表現される</li>
+</ul>
+</li>
+<li><strong>branch</strong><ul>
+<li>nodeへのポインタ</li>
+<li>まずは "master", "main" などと命名されている</li>
+</ul>
+</li>
+<li><strong>"HEAD"</strong><ul>
+<li>branchへのポインタ or nodeへのポインタ</li>
+<li>自分がいる場所を表す特別名</li>
+</ul>
+</li>
+</ul>
+<h2 id="git">gitでやること</h2>
+<ul>
+<li><strong>work</strong>の状況を見る<ul>
+<li><code>git status</code></li>
+<li><code>git diff</code></li>
+</ul>
+</li>
+<li><strong>work</strong>を<strong>stage</strong>に登録する<ul>
+<li><code>git add {file} ...</code></li>
+</ul>
+</li>
+<li><strong>stage</strong>をコミットする<ul>
+<li><code>git commit -m "{comment}"</code></li>
+</ul>
+</li>
+<li><strong>node</strong>達の状況を見る<ul>
+<li><code>git log --all --oneline --graph</code></li>
+</ul>
+</li>
+<li>ローカルの<strong>node</strong>達をリモートに送る<ul>
+<li><code>git push</code></li>
+</ul>
+</li>
+<li>リモートの<strong>node</strong>達をローカルに取り込む<ul>
+<li><code>git fetch</code></li>
+</ul>
+</li>
+<li><strong>work</strong>に<strong>node</strong>を自動マージしてコミットする<ul>
+<li><code>git merge {node}</code></li>
+<li>自動マージできない時は止まるので、手動マージ＆コミット</li>
+</ul>
+</li>
+<li><strong>"HEAD"</strong>の向きを変える<ul>
+<li><code>git checkout {branch}</code><ul>
+<li><strong>work</strong>が{branch}が向いている{node}時の状況になる</li>
+<li><code>HEAD</code>が{branch}へ向く (表示が <code>HEAD -&gt; {branch}</code> になる)</li>
+</ul>
+</li>
+<li><code>git checkout {node}</code><ul>
+<li><strong>work</strong>が{node}時の状況になる</li>
+<li><code>HEAD</code>が{node}へ向く (表示が <code>HEAD</code> 単独になる)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>branch</strong>の向きを変える<ul>
+<li><code>git branch -f {branch} {node}</code></li>
+<li>{branch}が{node}へ向く</li>
+</ul>
+</li>
+</ul>
+<h2 id="_2">糖衣コマンド</h2>
+<ul>
+<li><code>git pull</code> == fetch, merge</li>
+<li><code>git reset</code> ~= checkout, branch</li>
+</ul></div>
 <div class="col-md-3">
         
         <img src="/yrm.jpg" style="padding:1em; width:100%; border-radius:33%; ">
