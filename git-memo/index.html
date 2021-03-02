@@ -100,7 +100,7 @@
 
 <h1 id="git-memo">git-memo</h1>
 <p><img alt="" src="git-memo.svg" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<h2 id="_1">用語</h2>
+<h2 id="-">用語 ---</h2>
 <ul>
 <li><strong>work</strong><ul>
 <li>自分の作業ファイル達</li>
@@ -126,7 +126,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="git">gitでやること</h2>
+<h2 id="git-">gitでやること ---</h2>
 <ul>
 <li><strong>work</strong>の状況を見る<ul>
 <li><code>git status</code></li>
@@ -158,16 +158,8 @@
 </ul>
 </li>
 <li><strong>work</strong>に<strong>node</strong>を自動マージして結果をコミットする<ul>
-<li><code>git merge {node}</code></li>
+<li><code>git merge {node}</code> <strong>[±work]</strong></li>
 <li>自動マージできない時は止まるので、手動マージ＆コミット</li>
-</ul>
-</li>
-<li><strong>node</strong>時のファイルを見る<ul>
-<li><code>git show {branch}:{file}</code></li>
-</ul>
-</li>
-<li><strong>node</strong>時のファイルを取り出す<ul>
-<li><code>git checkout {branch} -- {file}</code></li>
 </ul>
 </li>
 <li><strong>branch</strong>の向きを変える<ul>
@@ -176,22 +168,37 @@
 </ul>
 </li>
 <li><strong>"HEAD"</strong>の向きを変える<ul>
-<li><code>git checkout {branch}</code><ul>
-<li><strong>work</strong>が{branch}が向いている{node}時の状況になる</li>
-<li><code>HEAD</code>が{branch}へ向く (表示が <code>HEAD -&gt; {branch}</code> になる)</li>
+<li><code>git checkout {branch}</code> <strong>[±work]</strong><ul>
+<li><strong>work</strong>が{branch}の向いている{node}時の状況になる</li>
+<li><code>HEAD</code>が{branch}へ向く</li>
 </ul>
 </li>
-<li><code>git checkout {node}</code><ul>
+<li><code>git checkout {node}</code> <strong>[±work]</strong><ul>
 <li><strong>work</strong>が{node}時の状況になる</li>
-<li><code>HEAD</code>が{node}へ向く (表示が <code>HEAD</code> 単独になる)</li>
+<li><code>HEAD</code>が{node}へ向く</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h2 id="_2">糖衣コマンド</h2>
+<h2 id="-_1">たまにやること ---</h2>
 <ul>
-<li><code>git pull</code> == fetch, merge</li>
+<li><strong>node</strong>時のファイルを見る<ul>
+<li><code>git show {node}:{file}</code></li>
+</ul>
+</li>
+<li><strong>node</strong>時のファイルを取り出す<ul>
+<li><code>git checkout {node} -- {file}</code> <strong>[±work]</strong></li>
+</ul>
+</li>
+<li><strong>node</strong>の状態を固めて出す<ul>
+<li><code>git archive --format=zip {node} &gt; exported.zip</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="-_2">糖衣コマンド ---</h2>
+<ul>
+<li><code>git pull</code> <strong>[±work]</strong> == fetch, merge</li>
 </ul></div>
 <div class="col-md-3">
         
