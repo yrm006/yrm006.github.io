@@ -162,6 +162,19 @@
 <li>自動マージできない時は止まるので、手動マージ＆コミット</li>
 </ul>
 </li>
+<li><strong>node</strong>時のファイルを見る<ul>
+<li><code>git show {branch}:{file}</code></li>
+</ul>
+</li>
+<li><strong>node</strong>時のファイルを取り出す<ul>
+<li><code>git checkout {branch} -- {file}</code></li>
+</ul>
+</li>
+<li><strong>branch</strong>の向きを変える<ul>
+<li><code>git branch -f {branch} {node}</code></li>
+<li>{branch}が{node}へ向く</li>
+</ul>
+</li>
 <li><strong>"HEAD"</strong>の向きを変える<ul>
 <li><code>git checkout {branch}</code><ul>
 <li><strong>work</strong>が{branch}が向いている{node}時の状況になる</li>
@@ -173,11 +186,6 @@
 <li><code>HEAD</code>が{node}へ向く (表示が <code>HEAD</code> 単独になる)</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><strong>branch</strong>の向きを変える<ul>
-<li><code>git branch -f {branch} {node}</code></li>
-<li>{branch}が{node}へ向く</li>
 </ul>
 </li>
 </ul>
