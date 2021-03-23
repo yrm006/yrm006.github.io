@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://yrm006.github.io/2021.03.23/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>プログラミングを楽しもう！マンデルブロ集合 by WebAssembly！ - about yrm</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    
+    
+        
+    
+    
+    
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="プログラミングを楽しもう！マンデルブロ集合 by WebAssembly！ - about yrm" />
+    <meta property="og:description" content="Keep on Gitting" />
+    <meta property="og:url" content="https://yrm006.github.io/2021.03.23/" />
+    <meta property="og:image" content="https://yrm006.github.io/2021.03.23/mandelbrot.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="プログラミングを楽しもう！マンデルブロ集合 by WebAssembly！ - about yrm" />
+    <meta name="twitter:description" content="Keep on Gitting" />
+    <meta name="twitter:image" content="https://yrm006.github.io/2021.03.23/mandelbrot.png" />
+
+    <link rel="icon" href="/yrm-32.jpg" sizes="32x32" />
+    <link rel="icon" href="/yrm-192.jpg" sizes="192x192" />
+
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H4T6DLC2FL"></script>
+    <script>
+        if(location.hostname == "yrm006.github.io"){
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-H4T6DLC2FL');
+        }
+    </script>
+
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">about yrm</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Blog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">Archive</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../git-memo/" class="nav-link">git-memo</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+<div class="col-md-9" role="main">
+
+<h1 id="by-webassembly">プログラミングを楽しもう！マンデルブロ集合 by WebAssembly！</h1>
+<p>流行りの<a href="https://ja.wikipedia.org/wiki/マンデルブロ集合">マンデルブロ集合</a>。</p>
+<blockquote class="twitter-tweet" data-theme="dark"><p lang="ja" dir="ltr">IchigoJam機でマンデルブロ！<br>ファームは IchigoLatte で言語はJS-likeなMINIScript、まずは LPC1114 、88.354(sec)。<br><br>Mandelbrot on the IchigoJam-board.<br>First, chip is LPC1114 and language is MINIScript that is like JS. <a href="https://t.co/DDVodTYKOR">pic.twitter.com/DDVodTYKOR</a></p>&mdash; Yuichi Ray Matta | 時を贈るおじさん (@yrm__) <a href="https://twitter.com/yrm__/status/1373890205124501504?ref_src=twsrc%5Etfw">March 22, 2021</a></blockquote>
+
+<blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="ja" dir="ltr">次は risc-v IchigoJam R。<br>だいぶ速くて 11.737(sec)。<br><br>Next board is IchigoJam typeR(risc-v). <a href="https://t.co/wpxCZwwYvg">pic.twitter.com/wpxCZwwYvg</a></p>&mdash; Yuichi Ray Matta | 時を贈るおじさん (@yrm__) <a href="https://twitter.com/yrm__/status/1373890798983421960?ref_src=twsrc%5Etfw">March 22, 2021</a></blockquote>
+
+<blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="ja" dir="ltr">そして Latte API で C言語、0.022(sec)。<br><br>And C language by Latte API. <a href="https://t.co/HRPB0Z4dEt">pic.twitter.com/HRPB0Z4dEt</a></p>&mdash; Yuichi Ray Matta | 時を贈るおじさん (@yrm__) <a href="https://twitter.com/yrm__/status/1373891346084159490?ref_src=twsrc%5Etfw">March 22, 2021</a></blockquote>
+
+<blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="ja" dir="ltr">Cがあまりに速いので、アニメーションも可能。<br><br>It is posible to do animation because C is too fast.<a href="https://twitter.com/hashtag/mandelbrot?src=hash&amp;ref_src=twsrc%5Etfw">#mandelbrot</a> <a href="https://twitter.com/hashtag/ichigojam?src=hash&amp;ref_src=twsrc%5Etfw">#ichigojam</a> <a href="https://t.co/woZQrfouqn">pic.twitter.com/woZQrfouqn</a></p>&mdash; Yuichi Ray Matta | 時を贈るおじさん (@yrm__) <a href="https://twitter.com/yrm__/status/1373892039964647425?ref_src=twsrc%5Etfw">March 22, 2021</a></blockquote>
+
+<blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="ja" dir="ltr">IchigoLatte JS のソースコードはこちら。<br><br>The MINIScript source code is here.<a href="https://t.co/EVOTDTikAJ">https://t.co/EVOTDTikAJ</a></p>&mdash; Yuichi Ray Matta | 時を贈るおじさん (@yrm__) <a href="https://twitter.com/yrm__/status/1373895191736713223?ref_src=twsrc%5Etfw">March 22, 2021</a></blockquote>
+
+<hr />
+<p>最後は WebAssembly on web browser 。</p>
+<script type="module">
+    let mod;
+    let scr;
+
+    window.onload = async function(e){
+        const wasm = "data:application/octet-stream;base64,AGFzbQEAAAABFgRgAABgA398fAF/YAJ/fwF/YAF/AXwDBwYAAQICAwAEBQFwAQEBBQMBAAUGOAl/AUGQiBALfwBBgAgLfwBBkAgLfwBBgAgLfwBBkIgMC38AQYAIC38AQZCIEAt/AEEAC38AQQELB8gBDwZtZW1vcnkCABFfX3dhc21fY2FsbF9jdG9ycwAACENvbXBsZXhfAAELQ29tcGxleF9tdWwAAgtDb21wbGV4X2FkZAADDENvbXBsZXhfYWJzMgAEBmNoYW5nZQAFB2dfc2NhbGUDAQVnX3NjcgMCDF9fZHNvX2hhbmRsZQMDCl9fZGF0YV9lbmQDBA1fX2dsb2JhbF9iYXNlAwULX19oZWFwX2Jhc2UDBg1fX21lbW9yeV9iYXNlAwcMX190YWJsZV9iYXNlAwgKswQGAgALEgAgACACOQMIIAAgATkDACAACzoBBHwgACABKwMAIgIgACsDCCIDoiAAKwMAIgQgASsDCCIFoqA5AwggACAEIAKiIAMgBaKhOQMAIAALJAAgACABKwMAIAArAwCgOQMAIAAgASsDCCAAKwMIoDkDCCAACxkBAXwgACsDACIBIAGiIAArAwgiASABoqALoAMKAX8BfAF/AXwBfwJ8AX8CfAF+A39BACEAQQBBACsDgIiAgABEMzMzMzMz8z+iIgE5A4CIgIAAA0AgAEEIdCECIABBoH9qtyABoyEDQQAhBANAIARBgH9qtyABo0S8dJMYBFb8v6AhBUQAAAAAAAAAACEGQQAhB0QAAAAAAAAAACEIAkADQCAIIAaiIQkgBSAGIAaiIAggCKKhoCIGIAaiIAkgCaAgA6EiCCAIoqAhCSAHQR5LDQEgB0EBaiEHIAghCCAJRAAAYGaeoOZBYw0ACwsCQAJAIAmZRAAAAAAAAOBDY0UNACAJsCEKDAELQoCAgICAgICAgH8hCgtB+H4hB0GBfiELQU0hDANAIAxBM2ohDCALQf8BaiELIAdBiAFqIQcgCkIBhyIKQgBSDQALIAQgAmpBAnQiDUGQiICAAGogDEE+bjoAACANQQFyQZCIgIAAaiALQT5uOgAAIA1BAnJBkIiAgABqIAdBPm46AAAgDUEDckGQiICAAGpB/wE6AAAgBEEBaiIEQYACRw0ACyAAQQFqIgBBwAFHDQALCwsPAQBBgAgLCAAAAAAAAD5AAFUEbmFtZQFOBgARX193YXNtX2NhbGxfY3RvcnMBCENvbXBsZXhfAgtDb21wbGV4X211bAMLQ29tcGxleF9hZGQEDENvbXBsZXhfYWJzMgUGY2hhbmdlAHoJcHJvZHVjZXJzAQxwcm9jZXNzZWQtYnkBBWNsYW5nWjExLjAuMCAoaHR0cHM6Ly9naXRodWIuY29tL2xsdm0vbGx2bS1wcm9qZWN0LmdpdCAxNzYyNDliZDY3MzJhODA0NGQ0NTcwOTJlZDkzMjc2ODcyNGE2ZjA2KQ==";
+        const env  = {cslog:console.log};
+        mod = (await WebAssembly.instantiate(await (await fetch(wasm)).arrayBuffer(), {"env":env})).instance.exports;
+        scr = new Uint8ClampedArray(mod.memory.buffer, mod.g_scr, 4*idScreen.width*idScreen.height);
+
+        mod.change();
+        idScreen.getContext('2d').putImageData(new ImageData(scr, idScreen.width, idScreen.height), 0, 0);
+    };
+
+    idScreen.onclick = async function(e){
+        mod.change();
+        idScreen.getContext('2d').putImageData(new ImageData(scr, idScreen.width, idScreen.height), 0, 0);
+    };
+  </script>
+<canvas id="idScreen" width="256" height="192"></canvas>
+
+<p>画像をクリックするとどんどん拡大、wasm速くて便利っ。普通にやったんでは拡大していくとぼやけてく、もっと拡大するにはどうやるといいんだろう？</p>
+<blockquote class="twitter-tweet" data-theme="dark"><p lang="ja" dir="ltr">「ターミナルでドーナツ」を発見、秀逸っ。<br><br>I found &quot;A donut in the terminal&quot;, cool works!<a href="https://t.co/qDBJ73WRJL">https://t.co/qDBJ73WRJL</a> <a href="https://t.co/2YVUkxRcVW">https://t.co/2YVUkxRcVW</a> <a href="https://t.co/u4x9cruvrE">pic.twitter.com/u4x9cruvrE</a></p>&mdash; Yuichi Ray Matta | 時を贈るおじさん (@yrm__) <a href="https://twitter.com/yrm__/status/1373587414296326147?ref_src=twsrc%5Etfw">March 21, 2021</a></blockquote>
+
+<p>プログラミングはゲーム作れたり、ロボット動かせたり、不思議な絵を描けたり、ドーナツ回せたり、楽しいことたくさん！</p>
+<p>これからもプログラミングを楽しもう！</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></div>
+<div class="col-md-3">
+        
+        <img src="/yrm.jpg" style="padding:1em; width:100%; border-radius:33%; ">
+        <div style="font-size:75%; color:#888; ">
+            <ul>
+                <li><a href="https://twitter.com/yrm__">Twitter</a></li>
+            </ul>
+            <p>
+                Create small and grow it big. 小さく生んで大きく育てる。
+                Keep on Gitting. Gitしつづけよ。
+            </p>
+            <p>
+                [ C/C++ プログラミング かにロボコン 書道伝 タミヤロボットスクール コンデレ IchigoLatte OpenVBS MINIScript ZOZO <a href="https://pcn.club">PCN</a> <a href="https://na-s.jp">NaturalStyle</a> ]
+            </p>
+        </div>
+    </div>
+
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+        <hr>
+        <p>CC-BY yrm</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
