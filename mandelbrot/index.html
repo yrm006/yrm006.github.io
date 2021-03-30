@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="https://yrm006.github.io/2021.02.15/">
+        <link rel="canonical" href="https://yrm006.github.io/mandelbrot/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>回覧板アプリ「cityhall」、小学6年生と制作中！いっしょに作ろう「Keep on Gitting!」 - about yrm</title>
+        <title>mandelbrot - about yrm</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -26,14 +26,14 @@
     
     
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="回覧板アプリ「cityhall」、小学6年生と制作中！いっしょに作ろう「Keep on Gitting!」 - about yrm" />
+    <meta property="og:title" content="mandelbrot - about yrm" />
     <meta property="og:description" content="Keep on Gitting" />
-    <meta property="og:url" content="https://yrm006.github.io/2021.02.15/" />
-    <meta property="og:image" content="https://yrm006.github.io/2021.02.15/IMG_2505.jpg" />
+    <meta property="og:url" content="https://yrm006.github.io/mandelbrot/" />
+    <meta property="og:image" content="https://yrm006.github.io/mandelbrot/mandelbrot.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="回覧板アプリ「cityhall」、小学6年生と制作中！いっしょに作ろう「Keep on Gitting!」 - about yrm" />
+    <meta name="twitter:title" content="mandelbrot - about yrm" />
     <meta name="twitter:description" content="Keep on Gitting" />
-    <meta name="twitter:image" content="https://yrm006.github.io/2021.02.15/IMG_2505.jpg" />
+    <meta name="twitter:image" content="https://yrm006.github.io/mandelbrot/mandelbrot.png" />
 
     <link rel="icon" href="/yrm-32.jpg" sizes="32x32" />
     <link rel="icon" href="/yrm-192.jpg" sizes="192x192" />
@@ -75,8 +75,8 @@
                             <li class="navitem">
                                 <a href="../git-memo/" class="nav-link">git-memo</a>
                             </li>
-                            <li class="navitem">
-                                <a href="../mandelbrot/" class="nav-link">mandelbrot</a>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">mandelbrot</a>
                             </li>
                         </ul>
 
@@ -86,6 +86,16 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../git-memo/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -95,26 +105,65 @@
             <div class="row">
 <div class="col-md-9" role="main">
 
-<h1 id="cityhall6keep-on-gitting">回覧板アプリ「cityhall」、小学6年生と制作中！いっしょに作ろう「Keep on Gitting!」</h1>
-<p>うちの地域では「回覧板」が回っていますが、中を見る機会はありません。でも、何か楽しい情報が載っているのかも？</p>
-<p><img alt="" src="Screen Shot 2021-02-16 at 8.37.52 copy.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>そこで作っています、回覧板アプリ「cityhall」。このように管理画面でメッセージを入力すると、</p>
-<p><img alt="" src="Screen Shot 2021-02-16 at 8.38.26.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>市民側の画面にそのメッセージが届きます。</p>
-<p><img alt="" src="Screen Shot 2021-02-16 at 8.36.48.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>ついでに「レポート」機能も追加、市民側が身近な気になることを写真付きで送信すると、</p>
-<p><img alt="" src="Screen Shot 2021-02-16 at 8.36.57.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>管理画面に到着。市民からのレポートを受けて、管理側が市民側とチャットできる機能を追加中。</p>
-<p><img alt="" src="IMG_2505.jpg" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>もちろんスマホのアプリとしても動作、みんなの市のロゴをアイコンにしてAppストアで配布するといいね！みなさんの市でいかがですか？</p>
-<p><img alt="" src="Screen Shot 2021-02-16 at 14.34.29.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>こちら、PCN勝山に通う小学6年生 <a href="https://github.com/ken7python">ken7python</a> と一緒に<a href="https://github.com/yrm006/cityhall">github</a>上で制作中！</p>
-<p>いっしょに制作、いかがですか？ Keep on Gitting!</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p></div>
+<h1 id="mandelbrot-set-by-webassembly">Mandelbrot-Set by WebAssembly</h1>
+<script type="module">
+    let mod;
+    let scr;
+    let as = 1000;
+    let ar, ai;
+
+    window.onload = async function(e){
+        const wasm = "data:application/octet-stream;base64,AGFzbQEAAAABDQNgAABgAn9/AGABfwADBAMAAQIEBQFwAQEBBQMBAAcGUA1/AUHwhBoLfwBBiAgLfwBBkAgLfwBBoAgLfwBBsAgLfwBBgAgLfwBBhAgLfwBBgAgLfwBB8IQWC38AQYAIC38AQfCEGgt/AEEAC38AQQELB8IBEAZtZW1vcnkCABFfX3dhc21fY2FsbF9jdG9ycwAABmNlbnRlcgABB2dfc2NhbGUDAQlnX2NlbnRlclIDAglnX2NlbnRlckkDAwRkcmF3AAIFZ19zY3IDBAVXSURUSAMFBkhFSUdIVAMGDF9fZHNvX2hhbmRsZQMHCl9fZGF0YV9lbmQDCA1fX2dsb2JhbF9iYXNlAwkLX19oZWFwX2Jhc2UDCg1fX21lbW9yeV9iYXNlAwsMX190YWJsZV9iYXNlAwwKnQsDAgALSQEBfEEAIABBuH5qt0EAKwOIiICAACICo0EAKwOQiICAAKGaOQOQiICAAEEAIAFBkH9qtyACo0EAKwOgiICAAKGaOQOgiICAAAvNCgcBfwN8AX8BfAF/BHwFf0EAIQFBACAAt0QAAAAAAECPQKNBACsDiIiAgACiIgI5A4iIgIAAQQArA6CIgIAAIQNBACsDkIiAgAAhBANAIAFBkANsIQUgAUGQf2q3IAKjIAOhIQZBACEHA0AgB0G4fmq3IAKjIAShIQhEAAAAAAAAAAAhCUEAIQBEAAAAAAAAAAAhCgJAA0AgCiAJoiELIABBAWohDCAIIAkgCaIgCiAKoqGgIgkgCaIgBiALIAugoCIKIAqioEQAAAAAAABwQGNBAXMNASAAQf8BSSENIAwhACAKIQogDQ0ACwtEAAAAAAAA8D8gDLdEAAAAAAAAcD+iIgqhRAAAAAAAAPA/pCIJRAAAAAAAAPA/IAmhoiEIAkACQCAKRAAAAAAAgHZAokQAAAAAAAAQQKJEAAAAAAAATkCjIguZRAAAAAAAAOBBY0UNACALqiEADAELQYCAgIB4IQALIAhEAAAAAADgb0CiIQogCUQAAAAAAADwPyAJIAsgAEEGbyIAt6EiCKKhokQAAAAAAOBvQKIhCyAJRAAAAAAAAPA/IAlEAAAAAAAA8D8gCKGioaJEAAAAAADgb0CiIQggCUQAAAAAAOBvQKIhCQJAAkACQAJAAkACQAJAAkAgAA4GAAECAwQFBwsCQAJAIApEAAAAAAAA8EFjIApEAAAAAAAAAABmcUUNACAKqyEODAELQQAhDgsCQAJAIAhEAAAAAAAA8EFjIAhEAAAAAAAAAABmcUUNACAIqyEPDAELQQAhDwsgCUQAAAAAAADwQWMgCUQAAAAAAAAAAGZxRQ0FIAmrIRAMBgsCQAJAIApEAAAAAAAA8EFjIApEAAAAAAAAAABmcUUNACAKqyEODAELQQAhDgsCQAJAIAlEAAAAAAAA8EFjIAlEAAAAAAAAAABmcUUNACAJqyEPDAELQQAhDwsgC0QAAAAAAADwQWMgC0QAAAAAAAAAAGZxRQ0EIAurIRAMBQsCQAJAIAhEAAAAAAAA8EFjIAhEAAAAAAAAAABmcUUNACAIqyEODAELQQAhDgsCQAJAIAlEAAAAAAAA8EFjIAlEAAAAAAAAAABmcUUNACAJqyEPDAELQQAhDwsgCkQAAAAAAADwQWMgCkQAAAAAAAAAAGZxRQ0DIAqrIRAMBAsCQAJAIAlEAAAAAAAA8EFjIAlEAAAAAAAAAABmcUUNACAJqyEODAELQQAhDgsCQAJAIAtEAAAAAAAA8EFjIAtEAAAAAAAAAABmcUUNACALqyEPDAELQQAhDwsgCkQAAAAAAADwQWMgCkQAAAAAAAAAAGZxRQ0CIAqrIRAMAwsCQAJAIAlEAAAAAAAA8EFjIAlEAAAAAAAAAABmcUUNACAJqyEODAELQQAhDgsCQAJAIApEAAAAAAAA8EFjIApEAAAAAAAAAABmcUUNACAKqyEPDAELQQAhDwsgCEQAAAAAAADwQWMgCEQAAAAAAAAAAGZxRQ0BIAirIRAMAgsCQAJAIAtEAAAAAAAA8EFjIAtEAAAAAAAAAABmcUUNACALqyEODAELQQAhDgsCQAJAIApEAAAAAAAA8EFjIApEAAAAAAAAAABmcUUNACAKqyEPDAELQQAhDwsgCUQAAAAAAADwQWMgCUQAAAAAAAAAAGZxRQ0AIAmrIRAMAQtBACEQCyAHIAVqQQJ0IgBBsIiAgABqIBA6AAAgAEEBckGwiICAAGogDzoAACAAQQJyQbCIgIAAaiAOOgAAIABBA3JBsIiAgABqQf8BOgAAIAdBAWoiB0GQA0cNAAsgAUEBaiIBQeEBRw0ACwsLJQIAQYAICwiQAQAA4QAAAABBiAgLEAAAAAAAAFBAexSuR+F6/D8AKQRuYW1lASIDABFfX3dhc21fY2FsbF9jdG9ycwEGY2VudGVyAgRkcmF3AHoJcHJvZHVjZXJzAQxwcm9jZXNzZWQtYnkBBWNsYW5nWjExLjAuMCAoaHR0cHM6Ly9naXRodWIuY29tL2xsdm0vbGx2bS1wcm9qZWN0LmdpdCAxNzYyNDliZDY3MzJhODA0NGQ0NTcwOTJlZDkzMjc2ODcyNGE2ZjA2KQ==";
+        const env  = {cslog:console.log};
+        mod = (await WebAssembly.instantiate(await (await fetch(wasm)).arrayBuffer(), {"env":env})).instance.exports;
+
+        idScreen.width = (new DataView(mod.memory.buffer, mod.WIDTH, 4)).getInt32(0, true);
+        idScreen.height = (new DataView(mod.memory.buffer, mod.HEIGHT, 4)).getInt32(0, true);
+        scr = new Uint8ClampedArray(mod.memory.buffer, mod.g_scr, 4*idScreen.width*idScreen.height);
+
+        setInterval(function(){
+            mod.draw(as);
+            idScreen.getContext('2d').putImageData(new ImageData(scr, idScreen.width, idScreen.height), 0, 0);
+        }, 1000/10);
+    };
+
+    idScreen.onmousedown = async function(e){
+        ar = (new DataView(mod.memory.buffer, mod.g_centerR, 8)).getFloat64(0, true);
+        ai = (new DataView(mod.memory.buffer, mod.g_centerI, 8)).getFloat64(0, true);
+    };
+
+    idScreen.onmousemove = async function(e){
+        if(e.buttons === 1){
+            mod.center(idScreen.width/2-e.movementX, idScreen.height/2-e.movementY);
+        }
+    }
+
+    idScreen.onmouseup = async function(e){
+        if(
+            ar === (new DataView(mod.memory.buffer, mod.g_centerR, 8)).getFloat64(0, true) &&
+            ai === (new DataView(mod.memory.buffer, mod.g_centerI, 8)).getFloat64(0, true) &&
+            true
+        ){
+            as = (as === 1000) ? (e.shiftKey) ? 995 : 1005 : 1000;
+        }
+    };
+
+    idScreen.ondblclick = async function(e){
+        idScreen.requestFullscreen();
+    }
+
+    idScreen.onwheel = async function(e){
+        as += e.deltaY / 4;
+    };
+  </script>
+<canvas id="idScreen"></canvas>
+
+<ul>
+<li>click: zoom in | stop</li>
+<li>shift+click: zoom out</li>
+<li>wheel: zoom speed</li>
+<li>drag: slide center of zoom</li>
+</ul></div>
 <div class="col-md-3">
         
         <img src="/yrm.jpg" style="padding:1em; width:100%; border-radius:33%; ">
