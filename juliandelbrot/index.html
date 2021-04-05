@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="https://yrm006.github.io/2021.03.25/">
+        <link rel="canonical" href="https://yrm006.github.io/juliandelbrot/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>donut.c without float types - about yrm</title>
+        <title>juliandelbrot - about yrm</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -26,14 +26,14 @@
     
     
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="donut.c without float types - about yrm" />
+    <meta property="og:title" content="juliandelbrot - about yrm" />
     <meta property="og:description" content="Keep on Gitting" />
-    <meta property="og:url" content="https://yrm006.github.io/2021.03.25/" />
-    <meta property="og:image" content="https://yrm006.github.io/2021.03.25/ss02.png" />
+    <meta property="og:url" content="https://yrm006.github.io/juliandelbrot/" />
+    <meta property="og:image" content="https://yrm006.github.io/juliandelbrot/mandelbrot.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="donut.c without float types - about yrm" />
+    <meta name="twitter:title" content="juliandelbrot - about yrm" />
     <meta name="twitter:description" content="Keep on Gitting" />
-    <meta name="twitter:image" content="https://yrm006.github.io/2021.03.25/ss02.png" />
+    <meta name="twitter:image" content="https://yrm006.github.io/juliandelbrot/mandelbrot.png" />
 
     <link rel="icon" href="/yrm-32.jpg" sizes="32x32" />
     <link rel="icon" href="/yrm-192.jpg" sizes="192x192" />
@@ -78,8 +78,8 @@
                             <li class="navitem">
                                 <a href="../mandelbrot/" class="nav-link">mandelbrot</a>
                             </li>
-                            <li class="navitem">
-                                <a href="../juliandelbrot/" class="nav-link">juliandelbrot</a>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">juliandelbrot</a>
                             </li>
                         </ul>
 
@@ -89,6 +89,16 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../mandelbrot/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -98,58 +108,60 @@
             <div class="row">
 <div class="col-md-9" role="main">
 
-<h1 id="donutc-without-float-types">donut.c without float types</h1>
-<blockquote class="twitter-tweet" data-theme="dark"><p lang="ja" dir="ltr">「ターミナルでドーナツ」を発見、秀逸っ。<br><br>I found &quot;A donut in the terminal&quot;, cool works!<a href="https://t.co/qDBJ73WRJL">https://t.co/qDBJ73WRJL</a> <a href="https://t.co/2YVUkxRcVW">https://t.co/2YVUkxRcVW</a> <a href="https://t.co/u4x9cruvrE">pic.twitter.com/u4x9cruvrE</a></p>&mdash; Yuichi Ray Matta | 時を贈るおじさん (@yrm__) <a href="https://twitter.com/yrm__/status/1373587414296326147?ref_src=twsrc%5Etfw">March 21, 2021</a></blockquote>
+<h1 id="julia-set-and-mandelbrot-set-by-webassembly">Julia-set and Mandelbrot-Set by WebAssembly</h1>
+<script type="module">
+    let mod;
+    let scrJulia;
+    let scrMande;
 
-<p>I found <a href="https://www.a1k0n.net/2021/01/13/optimizing-donut.html">a funcy c program</a>. </p>
-<p><img alt="" src="ss01.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
-<p>Even the source code is in the shape of a donut, which is very cool.</p>
-<p>It doesn't use a math library to be used on embedded device, <del>but still uses float types</del> (<a href="https://www.a1k0n.net/2021/01/13/optimizing-donut.html#getting-rid-of-float-too">I'm sorry, already there was a version that is bottom of the page.</a>). In my PC "<a href="https://p.na-s.jp/ichigoboard.html">IchigoJam</a>", it doesn't have any float instructions.</p>
-<pre><code>                           int s(int d){static
-                      const unsigned char tbl[]={3,8,
-                  12,17,21,26,30,35,39,43,48,52,57,61,65,
-               70,74,78,82,87,91,95,99,103,107,111,115,119,
-            123,127,131,135,138,142,146,149153,157,160,164,167
-         ,170,174,177,180,183,186,189,192,195,198,201,203,206,209
-       ,211,214,216,218,221,223,225,227,229,231,233,235,236,238,240,
-      241,242,244,245,246,247,248,249,250,251,252,253,253,254,254,254
-    ,255,255,255,255};int pm=1;if(d&lt;0){d*=-1;pm*=-1;}d%=360;if(180&lt;d)pm
-   *=-1;if(180&lt;=d)d-=180;if(90&lt;d)d=180-d;return d?(tbl[d-1]+1)*pm:0;}int
-  v(long long a,long long b)                   {int aL=*(int*)((void*)&amp;a+
-  4);int bL=*(int*)((void*)                     &amp;b+4);int bR=*(int*)((void
- *)&amp;b+0);return bL?aL/bL:                          aL*(0xffffffff/bR);}int
-main(){const int W=80;                             const int H=22;int k,A=
-0,B=0,i,j,z[W*H];char b                             [W*H];printf(&quot;\x1b[2J&quot;);
-while(1){memset(b,32,                                 sizeof(b));memset(z,0,
-sizeof(z));for(j=0;j&lt;360                            ;j+=4){for(i=0;i&lt;360;i+=
-1){int c=s(i),d=s(j+90)                              ,e=s(A),f=s(j),g=s(A+90
-),l=s(i+90),m=s(B+90)                               ,n=s(B);int h=d*1000/256
-+2000;int D=v(65536000000                         ,(c*h*e+f*g*1000+327680000
- ));int t=(c*h*g-f*e*1000)                       /0x10000;int x=v(32768LL*
-  1000000*W+30LL*D*(l*h*m-t                    *n*256),65536000000);int
-    y=v(32768000000*H+15LL*D*                (l*h*n+t*m*256),6553600LL*
-     10000);int o=W*y+x;int N=v(8LL*((256LL*f*e-1LL*c*d*g)*m-256LL*c*
-       d*e-256LL*f*g-256LL*l*d*n),0x100000000);if(0&lt;y&amp;&amp;y&lt;H&amp;&amp;0&lt;x&amp;&amp;x&lt;
-         W&amp;&amp;z[o]&lt;D){z[o]=D;b[o]=&quot;.,-~:;=!*#$@&quot;[N&gt;0?N:0];}}}printf
-          ('\n'+&quot; donut.c! \x1b[H&quot;);for(k=0;W*H+1&gt;k;k++){putchar
-             (k%W?b[k]:'\n');}usleep(10000);A+=2;B+=1;}}/*no
-                 math lib needed @a1k0n 2021. &amp;&amp; no float
-                         needed @yrm 2021. enjoy with
-                              a hot coffee*/
-</code></pre>
-<p>So I made a version that without float types. Please accept a bit clunky shapes. ;)</p>
-<blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">The donut.c in my new PC &#39;IchigoJam typeR&#39;. <a href="https://t.co/rvLdHfMUPC">pic.twitter.com/rvLdHfMUPC</a></p>&mdash; Yuichi Ray Matta | 時を贈るおじさん (@yrm__) <a href="https://twitter.com/yrm__/status/1374917132958330884?ref_src=twsrc%5Etfw">March 25, 2021</a></blockquote>
+    window.onload = async function(e){
+        const wasm = "data:application/octet-stream;base64,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";
+        const env  = {cslog:console.log};
+        mod = (await WebAssembly.instantiate(await (await fetch(wasm)).arrayBuffer(), {"env":env})).instance.exports;
 
-<p>It finally worked!</p>
-<blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">I&#39;ve missed see the version the without float. It&#39;s fast the <a href="https://twitter.com/a1k0n?ref_src=twsrc%5Etfw">@a1k0n</a> version. <a href="https://t.co/ZapEVBJKdl">https://t.co/ZapEVBJKdl</a> <a href="https://t.co/bjUTsfLckY">pic.twitter.com/bjUTsfLckY</a></p>&mdash; Yuichi Ray Matta | 時を贈るおじさん (@yrm__) <a href="https://twitter.com/yrm__/status/1374947190683049988?ref_src=twsrc%5Etfw">March 25, 2021</a></blockquote>
+        idScrJulia.width = (new DataView(mod.memory.buffer, mod.WIDTH, 4)).getInt32(0, true);
+        idScrJulia.height = (new DataView(mod.memory.buffer, mod.HEIGHT, 4)).getInt32(0, true);
+        scrJulia = new Uint8ClampedArray(mod.memory.buffer, mod.g_julia, 4*idScrJulia.width*idScrJulia.height);
+        mod.drawJulia(idScrJulia.width/2, idScrJulia.height/2);
+        idScrJulia.getContext('2d').putImageData(new ImageData(scrJulia, idScrJulia.width, idScrJulia.height), 0, 0);
 
-<p>And the original version is fast!</p>
-<p>Thank you funcy program <a href="https://www.a1k0n.net">@a1k0n</a>.</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p></div>
+        idScrMande.width = (new DataView(mod.memory.buffer, mod.WIDTH, 4)).getInt32(0, true);
+        idScrMande.height = (new DataView(mod.memory.buffer, mod.HEIGHT, 4)).getInt32(0, true);
+        scrMande = new Uint8ClampedArray(mod.memory.buffer, mod.g_mande, 4*idScrMande.width*idScrMande.height);
+        mod.drawMandel(idScrMande.width/2, idScrMande.height/2);
+        idScrMande.getContext('2d').putImageData(new ImageData(scrMande, idScrMande.width, idScrMande.height), 0, 0);
+    };
+
+    idScrJulia.onmousedown = async function(e){
+        mod.drawMandel(e.offsetX, e.offsetY);
+        idScrMande.getContext('2d').putImageData(new ImageData(scrMande, idScrMande.width, idScrMande.height), 0, 0);
+    };
+
+    idScrJulia.onmousemove = async function(e){
+        if(e.buttons === 1){
+            mod.drawMandel(e.offsetX, e.offsetY);
+            idScrMande.getContext('2d').putImageData(new ImageData(scrMande, idScrMande.width, idScrMande.height), 0, 0);
+        }
+    }
+
+    idScrMande.onmousedown = async function(e){
+        mod.drawJulia(e.offsetX, e.offsetY);
+        idScrJulia.getContext('2d').putImageData(new ImageData(scrJulia, idScrJulia.width, idScrJulia.height), 0, 0);
+    };
+
+    idScrMande.onmousemove = async function(e){
+        if(e.buttons === 1){
+            mod.drawJulia(e.offsetX, e.offsetY);
+            idScrJulia.getContext('2d').putImageData(new ImageData(scrJulia, idScrJulia.width, idScrJulia.height), 0, 0);
+        }
+    }
+  </script>
+<canvas id="idScrJulia"></canvas>
+<canvas id="idScrMande"></canvas>
+
+<ul>
+<li>click left-side or right-side</li>
+</ul></div>
 <div class="col-md-3">
         
         <img src="/yrm.jpg" style="padding:1em; width:100%; border-radius:33%; ">
