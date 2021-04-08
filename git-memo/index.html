@@ -112,6 +112,10 @@
 <p><img alt="" src="git-memo.svg" style="height:16em;margin:1em 0em 0em 0em;" /></p>
 <h2 id="-">用語 ---</h2>
 <ul>
+<li><strong>Repo</strong><ul>
+<li>gitが持つデータのストレージ</li>
+</ul>
+</li>
 <li><strong>work</strong><ul>
 <li>自分の作業ファイル達</li>
 </ul>
@@ -203,6 +207,14 @@
 </li>
 <li><strong>node</strong>の状態を固めて出す<ul>
 <li><code>git archive --format=zip {node} &gt; exported.zip</code></li>
+</ul>
+</li>
+<li>headless <strong>Repo</strong> を作る<ul>
+<li><code>git init --bare --shared</code><ul>
+<li><strong>work</strong>, <strong>stage</strong>, <strong>"HEAD"</strong> ができない</li>
+<li>push, fetch専用</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
