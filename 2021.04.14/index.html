@@ -102,7 +102,7 @@
 <div class="col-md-9" role="main">
 
 <h1 id="basic-ichigojam-web-pancake-web">ブラウザでBASICゲームを作ろう！ IchigoJam-web × PanCake-web が出た！</h1>
-<p><img alt="" src="ss02.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
+<p><img alt="" src="ss02.png" style="max-height:16em;margin:1em 0em 0em 0em;" /></p>
 <p><a href="https://fukuno.jig.jp/3184">福野くん</a> が <a href="https://fukuno.jig.jp/app/IchigoJam/pancake.html">PanCake の web版</a> を制作中、ついにBASICと合体したとあって、さっそく名作「<a href="http://pancake.shizentai.jp">りんごをさっちゃん</a>」をプレイ！</p>
 <pre><code>100 'LINGO WO SACCHAN S
 110 X=36:F=0:B=X+7:M=RND(72):N=0:R=0:S=0:A=1
@@ -136,7 +136,7 @@
 410 ?&quot;Game Over&quot;
 </code></pre>
 <p>原盤のソースにはバイナリコマンドがあり、web版では動かない部分があったため記述を少し変更、済みのソースはこちら。サウンド機能が欲しかったのでひとまず SOUND1 を機能追加して<a href="https://github.com/IchigoJam/ns-pancake/pull/3">プルリク、マージ</a>さんきゅっ。</p>
-<p><img alt="" src="ss01.png" style="height:16em;margin:1em 0em 0em 0em;" /></p>
+<p><img alt="" src="ss01.png" style="max-height:16em;margin:1em 0em 0em 0em;" /></p>
 <p><a href="https://fukuno.jig.jp/app/IchigoJam/pancake.html#100%20'LINGO%20WO%20SACCHAN%0A110%20X%3D36%3AF%3D0%3AB%3DX%2B7%3AM%3DRND(72)%3AN%3D0%3AR%3D0%3AS%3D0%3AA%3D1%0A120%20%3F%22PC%20RESET%22%0A160%20%3F%22PC%20SPRITE%20START%2001%22%0A170%20%3F%22PC%20SPRITE%20CREATE%2000%200B%22%0A180%20%3F%22PC%20SPRITE%20CREATE%2002%205D%22%0A190%20%3F%22PC%20SPRITE%20CREATE%2001%201F%22%0A200%20%3F%22PC%20SPRITE%20CREATE%2003%20A6%22%0A210%20%3F%22PC%20SPRITE%20CREATE%2004%20A6%22%0A220%20%3F%22PC%20SPRITE%20MOVE%2003%2000%2000%22%0A230%20%3F%22PC%20SPRITE%20MOVE%2004%2008%2000%22%0A240%20%3F%22PC%20SPRITE%20MOVE%2000%20%22%3BHEX%24(X%2C2)%3B%22%2023%22%0A250%20%3F%22PC%20SPRITE%20FLIP%2000%20%22%3BHEX%24(F%2C2)%3B%22%22%0A260%20%3F%22PC%20SPRITE%20MOVE%2002%20%22%3BHEX%24(B%2C2)%3B%22%2023%22%0A270%20%3F%22PC%20SPRITE%20FLIP%2002%20%22%3BHEX%24(F%2C2)%3B%22%22%0A280%20%3F%22PC%20SPRITE%20MOVE%2001%20%22%3BHEX%24(M%2C2)%3B%22%20%22%3BHEX%24(N%2C2)%3B%22%22%0A290%20%3F%22PC%20SPRITE%20ROTATE%2001%20%22%3BHEX%24(R%2C2)%3B%22%22%0A300%20%3F%22PC%20SPRITE%20CREATE%2003%20%22%3BHEX%24(%23A6%2BS%2F10%2C2)%3B%22%22%0A310%20%3F%22PC%20SPRITE%20CREATE%2004%20%22%3BHEX%24(%23A6%2BS%2510%2C2)%3B%22%22%0A320%20K%3DINKEY()%0A330%20IF%20K%3D28%20X%3DX-4%3AF%3D1%3AB%3DX-7%0A340%20IF%20K%3D29%20X%3DX%2B4%3AF%3D0%3AB%3DX%2B7%0A350%20R%3D(R%2B1)%254%3AN%3DN%2BRND(A%2B1)%0A360%20IF%20(35%3CN)*(B-4%3CM)*(M%3CB%2B4)%20S%3DS%2B1%0A370%20IF%20(35%3CN)*(X-4%3CM)*(M%3CX%2B4)%20GOTO%20400%0A380%20IF%2035%3CN%20M%3DRND(72)%3AN%3D0%3AA%3D(S%2B10)%2F10%0A390%20GOTO%20240%0A400%20%3F%22PC%20SOUND1%2000%2003%2000%22%3AWAIT90%0A401%20%3F%22PC%20SOUND1%2000%2003%20ff%22%0A410%20%3F%22Game%20Over%22%0A">良い感じで動いてる</a>！</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/hNuRQn6lYYk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
