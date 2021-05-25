@@ -3,33 +3,10 @@
 
 <head>
     <title>html practice v1.0</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
-    <script>
-        let g_editor;
-
-        function エディタを作る(){
-            g_editor = ace.edit("elmEditor");
-            g_editor.getSession().setMode("ace/mode/html");
-        }
-
-        function 見てみる(){
-            const u8ary = new TextEncoder().encode(g_editor.getValue());
-            elmPreview.src = `data:text/html;charset=utf-8;base64,${btoa(String.fromCharCode(...u8ary))}`;
-        }
-    </script>
 </head>
 
-<body style="height:96vh;">
-    <div style="height:2em;">
-        <button onclick="見てみる();">見てみる</button>
-    </div>
-    <div style="height:calc(100vh*0.90);">
-        <div style="float:left; width:50%; height:100%;" id="elmEditor"></div>
-        <script>エディタを作る();</script>
-        <div style="float:right; width:50%; height:100%;">
-            <iframe id="elmPreview" style="width:100%; height:100%;" src="data:text/html;charset=utf-8;base64,SFRNTOOCkuabuOOBhOOBpuOAjOimi+OBpuOBv+OCi+OAjeODnOOCv+ODs+OCkuOAgg=="></iframe>
-        </div>
-    </div>
+<body>
+    <a href="https://p.na-s.jp/htmlprac.html">引っ越しました。</a>
 </body>
 
 </html>
